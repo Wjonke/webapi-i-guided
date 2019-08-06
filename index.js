@@ -51,7 +51,21 @@ server.delete('/hubs/:id', (req, res)=> {
 })
 
 //update a hub
+// update a Hub (if time permits)
+server.put('/hubs/:id', (req, res) => {
+  const { id } = req.params;
+  const changes = req.body;
 
+  Hubs.update(id, changes)
+    .then(updated => {
+      if (updated) {
+        res.status(200).json(updated);
+      } else {
+        res.status(404).json({ message: 'hub not found' });
+      }
+    })
+    .catch(error => {
+      res.status(500).json({ message: 'error updating hub' });
 
 
 
